@@ -20,51 +20,48 @@ int	ft_atoi(char *str)
 	}
 	return (sign * result);
 }
-
-void	ft_putchar(char c)
+void my_own_itoa(long long int number)
 {
-	write(1, &c, 1);
-}
-
-void	ft_putnbr(int nb)
-{
-	if (nb == -2147483648)
+	if(number != 0)
 	{
-		ft_putchar('-');
-		ft_putchar('2');
-		nb = (nb % 1000000000 * -1);
+		my_own_itoa(number / 10);
+		write(1,&"0123456789"[number % 10],1);
 	}
-	if (nb < 0)
-	{
-		ft_putchar('-');
-		nb = (nb * -1);
-	}
-	if (nb / 10 > 0)
-		ft_putnbr(nb / 10);
-	ft_putchar(nb % 10 + '0');
-}
-
-int	main(int argc, char *argv[])
-{
-	int	i;
-	int	nbr;
-
-	if (argc != 2)
-		write(1, "\n", 1);
 	else
+		return;
+}
+int main(int argc, char **argv)
+{
+	long long int x = 1;
+	int y = 0;
+	long long int number = 0;
+	long long int results[9];
+	if (argc == 2)
 	{
-		i = 1;
-		nbr = ft_atoi(argv[1]);
-		while (i <= 9)
+		number = ft_atoi(argv[1]);
+		long long int results[number];
+		while (x <= 9)
 		{
-			ft_putnbr(i);
-			write(1, " x ", 3);
-			ft_putnbr(nbr);
-			write(1, " = ", 3);
-			ft_putnbr(i * nbr);
-			write(1, "\n", 1);
-			i += 1;
+			results[y] = number * x;
+			x++;
+			y++;
+		}
+		x = 0;
+		y = 0;
+		while(x < 9)
+		{
+			write(1,&"123456789"[x],1);
+			write(1," x ",3);
+			my_own_itoa(number);
+			write(1," = ",3);
+			my_own_itoa(results[y]);
+			x++;
+			y++;
+			write(1,"\n",1);
 		}
 	}
-	return (0);
+	else
+	{
+		write(1,"\n",1);
+	}
 }
