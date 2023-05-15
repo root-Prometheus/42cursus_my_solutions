@@ -1,37 +1,32 @@
-#include <stdlib.h>
 #include <unistd.h>
 
 int main(int argc, char **argv)
 {
-    int x = 0;
+    int labelx = 1,labely = 0;
+
     if (argc == 2)
     {
-        if(argv[1][x] ==  '\0')
-            write(1,"\n",1);
-        while(argv[1][x] != '\0')
+        while(argv[labelx] != NULL)
         {
-        
-           if (argv[1][x] == ' ' && x != 0)
-           {
-                if (argv[1][x+1] != '\0') 
-                    write(1," ",1);
-                while(argv[1][x] == ' ')
-                    x++;
-           }
-           else if (x == 0)
-           {
-            if (argv[1][0] == ' ')
-                x++;
-            else
-                write(1,&argv[1][x],1);
-           }
-           else{
-            write(1,&argv[1][x],1);
-            x++;
-           }
-            
-        }
+            labely = 0;
+            while(argv[labelx][labely] != '\0')
+            {
+                if (argv[labelx][labely] != ' ' && argv[labelx][labely] != '\t')
+                {
+                    while (argv[labelx][labely] != ' ' && argv[labelx][labely] != '\t')
+                    {
+                        write(1,&argv[labelx][labely],1);
+                        labely++;
+                    }
+                    if(argv[labelx][labely + 1] != '\0')
+                        write(1," ",1);
+                }
+                labely++;
+
+            }
+            labelx++;
+        }    
     }
-    else
-        write(1,"\n",1);
+    write(1,"\n",1);
+    return 0;
 }

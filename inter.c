@@ -1,39 +1,46 @@
 #include <unistd.h>
 
-int check(char *str,char word)
+int search(char *arr,char f)
 {
     int x = 0;
-
-    while(str[x] != '\0')
+    while(arr[x])
     {
-        if(str[x] == word)
+        if(arr[x] == f)
             return 1;
         x++;
     }
     return 0;
 }
-int main(int argc, char **argv)
+int ft_strlen(char *arr)
 {
-    int i = 0;
-    int x = 0;
-    char word[999];
+    int len = 0;
+
+    while(arr[len])
+        len++;
+    return len;
+}
+int main(int argc,char **argv)
+{
+    int x = 0,len = 0,y = 0;
+
     if (argc == 3)
-    {
-        while(argv[1][i] != '\0')
+    { 
+        len = ft_strlen(argv[1]);
+        char array[len];
+        while(argv[1][x])
         {
-            if (check(&argv[2][i],argv[1][i]) == 1)
+            if (search(argv[2],argv[1][x]) == 1)
             {
-                if(check(word,argv[1][i]) == 0)
+                if(search(array,argv[1][x]) == 0)
                 {
-                    word[x] = argv[1][i];
-                    x++;
+                    array[y] = argv[1][x];
+                    y++;
                 }
             }
-            i++;
+            x++;
         }
-        write(1,word,x);
-        write(1,"\n",1);
+        array[y] = '\0';
+        write(1,array,y);
     }
-    else
-        write(1,"\n",1);
+    write(1,"\n",1);
 }

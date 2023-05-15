@@ -1,37 +1,29 @@
-#include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char **argv)
+int main(int argc, char const *argv[])
 {
-    int x = 0;
+    int i;
+    int flag;
+
     if (argc == 2)
     {
-        if(argv[1][x] ==  '\0')
-            write(1,"\n",1);
-        while(argv[1][x] != '\0')
+        i = 0;
+        while (argv[1][i] == ' ' || argv[1][i] == '\t')
+            i++;
+        while (argv[1][i])
         {
-        
-           if (argv[1][x] == ' ' && x != 0)
-           {
-                if (argv[1][x+1] != '\0') 
-                    write(1,"   ",3);
-                while(argv[1][x] == ' ')
-                    x++;
-           }
-           else if (x == 0)
-           {
-            if (argv[1][0] == ' ')
-                x++;
-            else
-                write(1,&argv[1][x++],1);
-           }
-           else{
-            write(1,&argv[1][x],1);
-            x++;
-           }
-            
+            if (argv[1][i] == ' ' || argv[1][i] == '\t')
+                flag = 1;
+            if (!(argv[1][i] == ' ' || argv[1][i] == '\t'))
+            {
+                if (flag)
+                    write(1, "   ", 3);
+                flag = 0;
+                write(1, &argv[1][i], 1);
+            }
+            i++;
         }
     }
-    else
-        write(1,"\n",1);
+    write(1, "\n", 1);
+    return (0);
 }

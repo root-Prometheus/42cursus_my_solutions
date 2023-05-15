@@ -1,45 +1,55 @@
-#include <stdlib.h>
 #include <unistd.h>
-void print_num(int temp)
-{
-    if (temp <=9)
-        exit(write(1,&"0123456789"[temp],1));
-    else{
-        write(1,&"0123456789"[temp / 10],1);
-        print_num(temp % 10);
-    }
-}
-int atoi(const char *str)
+
+int ft_atoi(char *number)
 {
     int x = 0;
-    int temp = 0;
-    while(str[x] != '\0')
+    int val = 1;
+    int ct = 0;
+    if(number[0] == '-')
     {
-        temp = (temp * 10) + (str[x] - '0');
+        val = val * -1;
         x++;
     }
-    return temp;
+    while(number[x])
+    {
+        ct = (ct * 10) + (number[x] - '0');
+        x++;
+    }
+    return ct * val;
 }
-int main(int argc, char **argv)
+void p_itoa(int number)
 {
-    int x = 2;
-    int numbers = 0;
-    int result = 0;
-
+    if (number != 0)
+    {
+        p_itoa(number / 10);
+        write(1,&"0123456789"[number % 10],1);
+    }
+    return;
+}
+int main(int argc,char **argv)
+{
+    int number = 0,count = 2,result = 0,counter = 0,val = 1;
     if (argc == 2)
     {
-        numbers = atoi(argv[1]);
-        while(x <= numbers)
-        {
-            if (x % 2 != 0 || x == 2){
-                result = result + x;
+        number = ft_atoi(argv[1]);
+        while (count <= number)
+        {   
+            counter = 2;
+            val = 1;
+            while(counter < count)
+            {
+                if(count % counter == 0)
+                {
+                    val = 0;
+                    break;
+                }
+                counter++;
             }
-            x++;
+            if (val == 1)
+                result = result + count;
+            count++;
         }
-        print_num(result);
+        p_itoa(result);
     }
-    else{
-        write(1,"0",1);
-        write(1,"\n",1);
-    }
+    write(1,"\n",1);
 }
